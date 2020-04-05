@@ -22,25 +22,22 @@ export default class Login extends Component {
         this.setState({pwd:text})
     }
     login = ()=>{
-      // if(this.state.username==''||this.state.pwd==''){
-      //   ToastAndroid.show('请填写完整信息',20)
-      // }else{
+      if(this.state.username==''||this.state.pwd==''){
+        ToastAndroid.show('请填写完整信息',20)
+      }else{
         this.setState({isloading:true})
         myFetch.post('/login',{
             username:this.state.username,
             pwd:this.state.pwd}
         )
         .then(res=>{
-            // 根据返回状态进行判断，正确时跳转首页
-            // if(res){
-            // }
             AsyncStorage.setItem('user',JSON.stringify(res.data))
                 .then(()=>{
                     this.setState({isloading:false})
                     Actions.homePage();
                 })
         })
-      // }
+      }
     } 
     register=()=>{
       Actions.registerPage();
@@ -111,9 +108,17 @@ export default class Login extends Component {
         </View>
         {
             this.state.isloading
-            ?<View>
-              <Text >
-                正在登录
+            ?<View style={{flexDirection:'row',
+              justifyContent:'center',alignItems:'center'}}>
+              <Text style={{
+                backgroundColor:'red',
+                width:100,
+                height:50,
+                lineHeight:50,
+                textAlign:'center'
+                }}
+              >
+                正在登录....
                 </Text>
               </View>
             :null

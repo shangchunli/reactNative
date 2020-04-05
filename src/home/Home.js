@@ -2,13 +2,16 @@ import React, { Component } from 'react'
 import {View,Text,Image,TextInput,ScrollView,Dimensions,
 StyleSheet,TouchableOpacity,Button} from 'react-native'
 import { Icon } from '@ant-design/react-native'
+import Swiper from 'react-native-swiper';
+
 
 const {width}=Dimensions.get('window');
 
 export default class Home extends Component {
     render() {
         return (
-            <View style={{flex:1}}>
+            <ScrollView style={{width:width,height:700}}>
+            <View >
                 <View style={{backgroundColor:'red',height:70,paddingTop:20}}>
                     <View style={{backgroundColor:'red',
                         flexDirection:'row',height:40,justifyContent:'center'}}>
@@ -38,10 +41,8 @@ export default class Home extends Component {
                     </View>
                 </View>
                 <View style={{height:200}}>
-                    <ScrollView pagingEnabled={true}
-                        horizontal={true} 
-                    >
-                    <View style={styles.slide}>
+                    <Swiper>
+                        <View style={styles.slide}>
                             <Image style={{width:width,height:200}}
                                 source={require('../../assets/cour.png')}/>
                         </View>
@@ -53,11 +54,9 @@ export default class Home extends Component {
                             <Image style={{width:width,height:200}}
                             source={require('../../assets/cour.png')}/>
                         </View>
-                        
-                    </ScrollView>
+                    </Swiper>
                 </View>
-                <View style={{width:width,height:320}}
-                >
+                <View style={{width:width}}>
                     <View 
                         style={{height:80,backgroundColor:'#fff',
                     marginTop:10,flexDirection:'row'
@@ -145,6 +144,7 @@ export default class Home extends Component {
                     </View>
                 </View>
             </View>
+            </ScrollView>
         )
     }
 }

@@ -14,12 +14,12 @@ export default class Register extends Component {
     }
     userhandle = (text)=>{
       this.setState({username:text})
-  }
-  pwdhandle = (text)=>{
-      this.setState({pwd:text})
-  }
+    }
+    pwdhandle = (text)=>{
+        this.setState({pwd:text})
+    }
 
-    login=()=>{
+    register=()=>{
       if(this.state.username==''||this.state.pwd==''){
         ToastAndroid.show('请填写完整信息',20)
       }else {
@@ -29,27 +29,19 @@ export default class Register extends Component {
             pwd:this.state.pwd}
         )
         .then(res=>{
-          if(!res.data.token){
+          if(!res.data.tag){
             ToastAndroid.show('注册失败',20);
-            Actions.pop();
           }else{
             ToastAndroid.show('注册成功',20)
             Actions.pop()
           }
-          // if(JSON.stringify(res.data))
-            // 根据返回状态进行判断，正确时跳转首页
-            // if(res){
-
-            // }
-        //     AsyncStorage.setItem('user',JSON.stringify(res.data))
-        //         .then(()=>{
-        //             this.setState({isloading:false})
-        //             Actions.pop();
-        //         })
         })
       }
        
     } 
+    login=()=>{
+      Actions.pop()
+    }
 
     render() {
         return (
@@ -97,7 +89,7 @@ export default class Register extends Component {
                         alignItems: 'center',
                         justifyContent: 'center'
                     }}
-                    onPress={this.login}> 
+                    onPress={this.register}> 
                     <Text>注册</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 

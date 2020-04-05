@@ -1,129 +1,150 @@
-import React,{useState,useEffect} from 'react';
-import {StyleSheet,View,Text,Image,TextInput,ScrollView} from 'react-native';
-import {Icon} from '@ant-design/react-native'
-const styles=StyleSheet.create({
-  titl:{
-    marginTop:10,
-    marginLeft:30,
-    marginRight:30,
-    fontSize:18
-  },
-  titl1:{
-    color:"red"
-  },
-  box:{
-    width:'45%',
-    height:350,
-    backgroundColor:'#fff',
-    margin:10,
-    alignItems:'center',
-    paddingTop:20
-  },
-  intro:{
-    fontSize:18,
-    marginTop:10,
-    marginLeft:20
-  },
-  money:{
-    color:'red',
-    marginTop:10,
-    fontSize:18,
-    alignItems:'flex-start'
-  }
-});
+import React, { Component } from 'react'
+import {
+    View, 
+    Text, 
+    StyleSheet,
+    Dimensions,
+    AsyncStorage,
+    Button,
+    FlatList,
+    Image,
+    TextInput,
+    TouchableOpacity,
+    ScrollView,
+    StatusBar,
+    BackHandler
+} from 'react-native';
+import { Icon } from '@ant-design/react-native';
+const {width,scale} = Dimensions.get('window');
+const s = width / 640;
 
-const Goods = () => {
-  return (
-    <ScrollView>
-    <View>
-      {/* 白色背景部分 */}
-        <View style={{height:120,alignItems:'center',
-          backgroundColor:'#fff',width:'100%'}}>
-          {/* 搜索框 */}
-          <View style=
-          {{
-            width:"80%",
-            height:40,
-            backgroundColor:'#eeeeee',
-            flexDirection:'row',
-            alignItems:'center',//竖轴居中
-            paddingLeft:20,
-            marginTop:10,
-          }}>
-            <TextInput placeholder='请输入商品名称'/>
-            {/* <Icon name='home'/> */}
-            <Image style={{marginLeft:'55%'}}
-            source={require('../../assets/search.png')}/>
-          </View>
-          
+const goods = [
+    {
+        title: '玉米卷20包膨化休闲食品Oishi/上好佳',
+        price: 36,
+        img: require('../../assets/one.png')
+    },
+    {
+      title: 'Oishi/上好佳闲食品Oishi/上好佳',
+      price: 36,
+      img: require('../../assets/one.png')
+  },
+    {
+        title: 'Oishi/上好佳闲食品Oishi/上好佳',
+        price: 36,
+        img: require('../../assets/one.png')
+    },
+    {
+      title: 'Oishi/上好佳玉米卷20包膨化休闲食品Oishi/上好佳',
+      price: 36,
+      img: require('../../assets/one.png')
+    },
+    {
+        title: 'Oishi/上好佳玉米卷20包膨化休闲食品Oishi/上好佳',
+        price: 36,
+        img: require('../../assets/one.png')
+    },
+    {
+        title: 'Oishi/上好佳玉米卷20包膨化休闲食品Oishi/上好佳',
+        price: 36,
+        img: require('../../assets/one.png')
+    },
+]
 
-          
-          {/* 标题栏 */}
-          <View style={{width:'100%',height:40,marginTop:10,
-            flexDirection:'row',justifyContent:'center'}}>
-            <Text style={[styles.titl,styles.titl1]}>综合</Text>
-            <Text style={styles.titl}>销量</Text>
-            <Text style={styles.titl}>新品</Text>
-            <Text style={styles.titl}>价格</Text>
-            <Text style={styles.titl}>信用</Text>
-          </View>
-        </View>
-        {/* 内容部分 */}
-        <View style={{width:'100%',backgroundColor:'#f4f4f4',
-          alignItems:'center'}}>
-            <View style={{
-            flexDirection:'row',
-            justifyContent:'space-evenly',
-            flexWrap:'wrap'
-            }}>
-            <View style={styles.box}>
-              <Image source={require('../../assets/one.png')}/>
-              <Text style={styles.intro}>
-                Oishi/上好佳玉米卷20包膨化休闲食品Oishi/上好佳
-              </Text>
-              <Text style={styles.money}>36.00</Text>
+export default class Goods extends Component {
+    constructor(){
+        super();
+        this.state = {
+            tits: []
+        }
+    }
+    render() {
+        return (
+            <View style={{flex: 1,backgroundColor: '#fff'}}>
+                <View style={styles.header}>
+                    <View style={styles.search}>
+                        <TextInput 
+                            placeholder="请输入名称"
+                            style={{
+                                width: 490*s,height: 50*s,
+                                padding: 0,
+                                paddingLeft: 10
+                            }}
+                        />
+                        <Icon name='search' />
+                    </View>
+                </View>
+                <View style={styles.nav}>
+                    <TouchableOpacity>
+                        <Text>综合</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Text>销量</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Text>新品</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Text>价格</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Text>信用</Text>
+                    </TouchableOpacity>
+                </View>
+                <FlatList 
+                    style={{backgroundColor: '#F4F4F4'}}
+                    data={goods}
+                    numColumns={2}
+                    renderItem={({item})=>(
+                        <View style={styles.good}>
+                            <Image 
+                                resizeMode="contain"
+                                source={item.img}
+                                style={{height:180*s,marginTop: 60*s}}
+                            />
+                            <Text
+                                style={{marginTop: 20}}
+                            
+                            >{item.title}</Text>
+                            <Text 
+                                style={{width:'100%',color: 'red'}}
+                            >{item.price}</Text>
+                        </View>
+                    )}
+                />
             </View>
-            <View style={styles.box}>
-              <Image source={require('../../assets/two.png')}/>
-              <Text style={styles.intro}>
-                Oishi/上好佳玉米卷20包膨化休闲食品Oishi/上好佳
-              </Text>
-              <Text style={styles.money}>36.00</Text>
-            </View>
-            <View style={styles.box}>
-              <Image source={require('../../assets/one.png')}/>
-              <Text style={styles.intro}>
-                Oishi/上好佳玉米卷20包膨化休闲食品Oishi/上好佳
-              </Text>
-              <Text style={styles.money}>36.00</Text>
-            </View>
-            <View style={styles.box}>
-              <Image source={require('../../assets/two.png')}/>
-              <Text style={styles.intro}>
-                Oishi/上好佳玉米卷20包膨化休闲食品Oishi/上好佳
-              </Text>
-              <Text style={styles.money}>36.00</Text>
-            </View>
-            <View style={styles.box}>
-              <Image source={require('../../assets/one.png')}/>
-              <Text style={styles.intro}>
-                Oishi/上好佳玉米卷20包膨化休闲食品Oishi/上好佳
-              </Text>
-              <Text style={styles.money}>36.00</Text>
-            </View>
-            <View style={styles.box}>
-              <Image source={require('../../assets/two.png')}/>
-              <Text style={styles.intro}>
-                Oishi/上好佳玉米卷20包膨化休闲食品Oishi/上好佳
-              </Text>
-              <Text style={styles.money}>36.00</Text>
-            </View>
-          </View>
-        </View>
-      </View>
-      </ScrollView>
-  )
-};
-
-
-export default Goods;
+        )
+    }
+}
+const styles = StyleSheet.create({
+    header:{
+        height: 70*s,
+        borderBottomColor: '#E8E8E8',
+        borderBottomWidth: 1/3,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    search:{
+        width: 544*s,
+        height: 50*s,
+        backgroundColor: '#EEEEEE',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    nav:{
+        height: 73*s,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around'
+    },
+    good:{
+        width: 290*s,
+        backgroundColor: '#fff',
+        marginLeft: 20*s,
+        marginTop: 20*s,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingBottom: 20,
+        alignItems: 'center'
+    }
+})

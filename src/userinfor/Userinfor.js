@@ -7,6 +7,8 @@ import ImagePicker from 'react-native-image-picker';
 
 
 const {width}=Dimensions.get('window');
+console.log(width);
+
 
 const options = {
     title: 'Select Avatar',
@@ -104,9 +106,8 @@ export default class Userinfor extends Component {
 
     }
     render() {    
-        console.log(source)   
         return (
-            <ScrollView>
+            <ScrollView style={{width:width}}>
                 <View style={{flex:1}}>
                     
                     <View 
@@ -115,7 +116,7 @@ export default class Userinfor extends Component {
                         alignItems:'center'}}
                     >
                         <TouchableOpacity onPress={this.takephoto}>
-                            <Image style={{height:160,width:160,borderRadius:160,borderWidth:1}}
+                            <Image style={{height:160,width:width*0.3,borderRadius:width*0.3,borderWidth:1}}
                             source={
                                 this.state.imageUrl
                                 }/>
@@ -152,7 +153,7 @@ export default class Userinfor extends Component {
                                 renderItem={({item})=>
                                 <View 
                                 style={{justifyContent:'center',
-                                alignItems:'center',height:100,width:150}}>
+                                alignItems:'center',height:100,width:width*0.3}}>
                                     <Icon style={{marginTop:10}} size='lg'
                                         name={item.name}/>
                                     <Text style={{marginTop:10,fontSize:16}}>
@@ -193,7 +194,7 @@ export default class Userinfor extends Component {
                                 renderItem={({item})=>
                                 <TouchableOpacity onPress={()=>Actions.publish()} 
                                 style={{justifyContent:'center',
-                                    alignItems:'center',height:90,width:150}}
+                                    alignItems:'center',height:90,width:width*0.3}}
                                 >
                                     <Icon style={{marginTop:10}} size='lg'
                                         name={item.name}/>
